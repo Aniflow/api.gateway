@@ -1,12 +1,6 @@
-import os
 import jwt
 from fastapi import Request, HTTPException, status
-from dotenv import load_dotenv
-
-load_dotenv()
-
-JWT_SECRET = os.getenv("JWT_SECRET", "your-dev-secret")
-JWT_ALGORITHM = os.getenv("JWT_ALGORITHM", "HS256")
+from ...config import CONFIG
 
 
 def verify_jwt(request: Request):
@@ -20,8 +14,14 @@ def verify_jwt(request: Request):
     token = auth_header.split(" ")[1]
 
     try:
-        payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        payload = jwt.decode(
+            token,
+            CONFIG.JWT_SECRET,
+            algorithms=[CONFIG.JWT_ALGORITHM]
+        )
+
         request.state.user = payload
+
     except jwt.ExpiredSignatureError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
