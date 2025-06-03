@@ -32,7 +32,6 @@ jobs:
   
   build:
     name: Build and Push
-    needs: loadtest
     runs-on: ubuntu-latest
 
     steps:
