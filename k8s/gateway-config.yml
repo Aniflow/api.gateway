@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gateway-config
+data:
+  ANIME_SERVICE_URL: "http://anime-service:8001"
+  USER_SERVICE_URL: "http://user-service:8002"
+  FAVORITE_SERVICE_URL: "http://favorite-service:8003"
